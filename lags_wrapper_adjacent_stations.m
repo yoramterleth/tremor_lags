@@ -11,13 +11,10 @@ addpath 'C:/Users/Yoram/OneDrive - University of Idaho/Desktop/matlab_helpers/'
 
 %% input parameters
 
-ref_station = 'SE15' ; 
-
+% dates of period to investigate:
 dates = [datetime(2020,09,16):datetime(2022,08,01)]; 
 
 % intialise fns, to get length
-%fns_init =  {'SW2','SW7','SE7','SE9','SE14','SW14','SE15'}; 
-%fns_init = {'SW2','SE9','SE14','SE15'}; 
 fns_init = {'SE15','SE7','SW2'} ; 
 
 % initialise input array 
@@ -44,35 +41,13 @@ end
 %% save the lags matrix 
 save('lag_array_simplified_long_4.mat', 'lag_array','coh_array', 'fns','fns_combo', 'dates')
 
-
-%% make a corrected matrix, that exlcudes neg and very small values 
-threshold = 1 /24 ; % lags smaller than one hour likely reflect moments with a signle source mechanism... 
-
-% load the lags 
-load([pwd,'/lag_array_simplified_long_4.mat']) ; 
-
-% replace values below lag trheshold with nan
-coh_array(lag_array<threshold)=nan ; 
-lag_array(lag_array<threshold)=nan ; 
-
-
-save('lag_array_corrected_long_4.mat', 'lag_array','coh_array', 'fns','fns_combo', 'dates')
-
-
-%% visualisation
-load lag_array.mat
-lag_array(lag_array>0)=nan ; 
-figure, imagesc(lag_array)
-
 %% 
 figure 
 plt = subplot(1,1,1) ; 
 pcolor(dates, [1:length(fns_init)], -flipud(lag_array*24)), shading flat
 
 yticks([1.5:1:8]) ;
-%yticklabels(fns_combo);
-%yticklabels({'S15-SE14','SE14-SE9','SE9-SW2'})
-%yticklabels({'SE15-SW14','SW14-SE14','SE14-SE9','SE9-SE7','SE7-SW7','SW7-SW2'})
+
 c = colorbar ; 
 ylabel(c,'hours','fontweight','bold') 
 title('Adjacent lags')
@@ -100,9 +75,5 @@ grid on
 ylabel('Lag (hours)')
 legend(fns_combo)
 title('Adjacent lags')
-
-%% select out the 3 long distance ones 
-% lags_select = lag_array([2,4,5],:)
-% figure, imagesc(lags_select)
 
 mean(-lag_array,2,'omitnan').*(24*3600) ./ [1; 5000; 1000; 3000; 5000; 100; 1000]
