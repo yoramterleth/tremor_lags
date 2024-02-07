@@ -1,5 +1,5 @@
 %% LAG plot 
-%% to avoid confusion, this script incorporates the full pipeline to get at the lags in relation to a single reference station, and plots them
+%% to avoid confusion, this script incorporates the full pipeline to get at the lags in relation to adjacent stations, and plots them
 
 %% clean up
 close all
