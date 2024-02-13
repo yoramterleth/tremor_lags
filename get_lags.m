@@ -65,26 +65,4 @@ for i = 1:length(fns)
 end 
     
 
-%% now get a !very! rough estimate of velocity 
-
-% % v = d/t 
-% t = specific_lags .* 86400 ; % time in seconds
-% t(t<1)=nan ; % prevent possible +infinities by deleting less than minute lags
-% d = (ref_station_dist - fns_loc(1:end-1)).* 1000 ; % distance in meters
-% 
-% if indiv_velocities 
-%     t =  diff(specific_lags,1,2) .* 86400 ; % time in seconds
-%     t(t<1)=nan ; % prevent possible +infinities by deleting less than minute lags
-%     % d = diff(fns_loc).* 1000 ; % distance in meters
-%     d = [5,0.1,2,5,0.1,1] .* 1000 ; 
-%     fns = fns(1:end);    
-% end 
-% 
-% v = d./t ; 
-% 
-% % !!!! here we delete any <0 velocities, as we think those are the result
-% % of local melting... but carefull!!!! 
-% v(v<=0)=nan; 
-
-
 
