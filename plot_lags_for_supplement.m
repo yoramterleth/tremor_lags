@@ -104,27 +104,6 @@ xlim(time_window2)
 yline(3,'--',LineWidth=lw+.5,Color=color_w_2)
 yline(5,'--',LineWidth=lw+.5,Color=color_w_2)
 
-
-% LAGS = subplot(3,1,1) ; 
-% 
-%     scatter(lgs.dates, lgs.lag_array(2,:).*24,'linewidth',lw,'MarkerEdgeColor','k','MarkerFaceColor',rgb('bluey purple')), hold on
-%     scatter(lgs.dates, lgs.lag_array(3,:).*24,'linewidth',lw,'MarkerEdgeColor','k','MarkerFaceColor',rgb('faded red'))
-%     %legend(lgs.fns_combo{2:end})
-%     set(LAGS, 'box','off')
-%     set(LAGS,'YColor',	rgb('bluey purple')) ; 
-%     set(LAGS,'fontweight','bold')
-%     xlim([times(1),times(2)]);
-%     %set(LAGS, 'XTickLabel',[], 'xtick', []);
-%     LAGS.XAxis.Visible='off' ;
-%     ylim([-15,25]); 
-%     LAGS.XGrid = 'on';   
-%     LAGS.YGrid = 'on';
-%     ylabel({'Raw time lag between', 'station pairs (hours)'})
-%     LAGS.YAxisLocation = 'left'; 
-%     yline(0,LineWidth=2,Color=rgb('bluey purple'))
-%     %xticks(ticks)
-%    
-
 %% now delete lags that are below the coherence threshold value 
 lag_highco = lgs.lag_array ; 
 lag_highco(lgs.coh_array < 0.7) = nan ; 
@@ -192,8 +171,6 @@ hold on
 for p = 1:length(lgs.lag_array(:,1))-1
     scatter(lgs.dates, lgs.lag_array(p,:).*24)%,'linewidth',lw,'MarkerEdgeColor','k') %,'MarkerFaceColor',rgb('bluey purple')), hold on
 end 
-%scatter(lgs.dates, lgs.lag_array(3,:).*24,'linewidth',lw,'MarkerEdgeColor','k','MarkerFaceColor',rgb('faded red'))
-    %legend(lgs.fns_combo{2:end})
     set(LAGS, 'box','off')
     set(LAGS,'YColor',	rgb('bluey purple')) ; 
     set(LAGS,'fontweight','bold')
@@ -206,7 +183,6 @@ end
     ylabel({'Raw time lag between', 'station pairs (hours)'})
     legend(lgs.fns)
     LAGS.YAxisLocation = 'left'; 
-    %xticks(ticks)
 
 %% now delete lags that are below the coherence threshold value 
 lag_highco = lgs.lag_array ; 
@@ -217,7 +193,6 @@ hold on
 for p = 1:length(lgs.lag_array(:,1))-1
     scatter(lgs.dates, lag_highco(p,:).*24)%,'linewidth',lw,'MarkerEdgeColor','k') %,'MarkerFaceColor',rgb('bluey purple')), hold on
 end 
-%legend(lgs.fns_combo{2:end})
     set(LAGS_H, 'box','off')
     set(LAGS_H,'YColor',	rgb('bluey purple')) ; 
     set(LAGS_H,'fontweight','bold')
@@ -262,7 +237,7 @@ end
     figure 
     LAGS_E = subplot(1,1,1) ; 
 hold on 
-%colors = [rgb('dark red');rgb('bluey purple');rgb('dark red');rgb('fuchsia');rgb('light blue');rgb('grass green');rgb('light aqua');rgb('pumpkin')] ; 
+
 colors=flipud(plasma(length(lgs.lag_array(:,1))-1)); 
 
 for p = length(lgs.lag_array(:,1))-1:-1:1
