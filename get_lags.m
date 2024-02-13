@@ -1,6 +1,8 @@
 function [specific_lag,specific_wcoh, fns] = get_lags(ref_station, date) 
 
 %% get_lags
+% this function is called in the lags_wrapper. It computes the lags for all stations relative to one single reference station. 
+
 
 %% script parameters 
 
