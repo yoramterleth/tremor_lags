@@ -8,5 +8,3 @@ A more detialed description is forthcoming.
 There are two approaches: 
 - compute all lags relative to a single reference station, most likely the furthest upglacier one. For this use the script lags_wrapper.m. 
 - compute lags relative to the adjacent station, in a user defined order. For this use the script lags_wrapper_adjacent_stations.m.
-
-- 
