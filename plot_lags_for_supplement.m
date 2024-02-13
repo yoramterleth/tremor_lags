@@ -1,4 +1,5 @@
-%% lAg plot for supplement 
+%% lag plot for supplement 
+% this script was used to generate the figure in the supplementary information. 
 
 close all
 clearvars 
@@ -253,14 +254,20 @@ end
     LAGS_E.YAxisLocation = 'left'; 
     %xticks(ticks)
 
+
+
     %% 
+    lag_highco = lgs.lag_array ; 
+    lag_highco(lgs.coh_array < 0.7) = nan ; 
+    figure 
     LAGS_E = subplot(1,1,1) ; 
 hold on 
 %colors = [rgb('dark red');rgb('bluey purple');rgb('dark red');rgb('fuchsia');rgb('light blue');rgb('grass green');rgb('light aqua');rgb('pumpkin')] ; 
 colors=flipud(plasma(length(lgs.lag_array(:,1))-1)); 
 
-for p = 1:length(lgs.lag_array(:,1))-1
-    scatter(lgs.dates, lag_final(p,:).*24,'linewidth',lw,'MarkerEdgeColor','k','MarkerFaceColor',colors(p,:)), hold on
+for p = length(lgs.lag_array(:,1))-1:-1:1
+    %scatter(lgs.dates, lag_final(p,:).*24,'linewidth',lw,'MarkerEdgeColor','k','MarkerFaceColor',colors(p,:)), hold on
+    scatter(lgs.dates, lag_highco(p,:).*24,'linewidth',lw,'MarkerEdgeColor','k','MarkerFaceColor',colors(p,:)), hold on
 end 
     %legend(lgs.fns_combo{2:end})
     set(LAGS_E, 'box','off')
@@ -269,54 +276,20 @@ end
     xlim([times(1),times(2)]);
     %set(LAGS, 'XTickLabel',[], 'xtick', []);
     LAGS_E.XAxis.Visible='on' ;
-    ylim([-2,28]) ; % max(lgs.lag_array(:))*24+1]); 
+    ylim([-13,28]) ; % max(lgs.lag_array(:))*24+1]); 
     LAGS_E.XGrid = 'on';   
     LAGS_E.YGrid = 'on';
     ylabel({'Positive high coherence time lag'; 'relative to SE15 (hours)'})
     LAGS_E.YAxisLocation = 'left'; 
-    legend(lgs.fns(1:end-1))
+    yline(0,'--k')
+    legend(fliplr(lgs.fns(1:end-1)))
+    
     %xticks(ticks)
-aa
 
-figure 
-plt = subplot(1,1,1) ; 
-pcolor(dates, [1:length(fns_init)], -flipud(lag_array*24)), shading flat
+    %% lags highco to csv 
+    matrix =  lag_highco'.*24 ; 
+    lags_GHT = array2table(matrix,VariableNames=lgs.fns) ; 
+    lags_GHT.time = lgs.dates' ; 
 
-yticks([1.5:1:8]) ;
-%yticklabels(fns_combo);
-%yticklabels({'S15-SE14','SE14-SE9','SE9-SW2'})
-%yticklabels({'SE15-SW14','SW14-SE14','SE14-SE9','SE9-SE7','SE7-SW7','SW7-SW2'})
-c = colorbar ; 
-ylabel(c,'hours','fontweight','bold') 
-title('Adjacent lags')
-set(plt,'fontweight','bold')
-cmap = flipud(abs(cbrewer('div','RdBu',128,'spline')));
-cmap = abs(cbrewer('seq','Reds',128,'spline'));
-cmap(cmap>1)=1; 
-colormap(cmap)
-caxis([0,8])
-
-grid on
-
-ax = gca ; 
-ax.Layer = 'top' ; 
-
-%%
-figure
-linecolors = plasma(256); 
-linecolor_step = [1:floor(length(linecolors)/length(fns_init)):256]; 
-hold on 
-for p = 1:length(fns_init)
-    plot(dates, lag_array(p,:)*24,'linewidth',1.2) %, 'color', linecolors(linecolor_step(p),:))
-end 
-xlim([datetime(2021,06,15),datetime(2021,09,15)])
-grid on 
-ylabel('Lag (hours)')
-legend(fns_combo)
-title('Adjacent lags')
-
-%% select out the 3 long distance ones 
-% lags_select = lag_array([2,4,5],:)
-% figure, imagesc(lags_select)
-
-mean(-lag_array,2,'omitnan').*(24*3600) ./ [1; 5000; 1000; 3000; 5000; 100; 1000]
+   % Save Table as CSV
+    writetable(lags_GHT, 'SK_lags_GHT.csv');
