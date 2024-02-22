@@ -10,6 +10,7 @@
 % provide station names in that file. It is possible to provide anywhere
 % between two, and the maximum ammount of station names contained in the
 % mat file. 
+
 %% clean up
 close all
 clear all
