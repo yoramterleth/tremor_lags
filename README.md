@@ -1,6 +1,6 @@
 # tremor_lags
 
-This code repository accompanies Terleth et al. Transient subglacial water routing efficiency modulates ice velocities prior to surge termination on Sít’ Kusá, Alaska. **doi:10.1017/jog.2024.38**. 
+This code repository accompanies Terleth et al. (2024), available at https://doi.org/10.1017/jog.2024.38. 
 
 Code repository for the compution of lag times between coherent glacio-hydraulic tremor series acquired through a network of independent seismic stations. Utilizes the matlab wavelet coherence tools (https://www.mathworks.com/help/wavelet/ug/compare-time-frequency-content-in-signals-with-wavelet-coherence.html).
 These scripts are meant to take the glaciohydraulic tremor timeseries produced with med_spec (https://github.com/tbartholomaus/med_spec). 
